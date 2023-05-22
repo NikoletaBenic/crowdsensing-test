@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
 })
 
 app.get("/getMeasurements", async (req, res) => {
-  //const snapshot = await Measurements.get();
-  //const list = snapshot.docs.map((doc)=>({id: doc.id, ...doc.data()}));
+  const snapshot = await Measurements.get();
+  const list = snapshot.docs.map((doc)=>({id: doc.id, ...doc.data()}));
   res.send("works");
 })
 
