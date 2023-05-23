@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 const Measurements = require('./config')
 const {check, validationResult} = require("express-validator");
 app.use(express.json());
+const cors = require('cors');
 
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Server side is running')
@@ -14,7 +16,8 @@ app.post("/addMeasurement", [
   check("location").notEmpty().withMessage("Location must be provided!"),
   check("location.lat").notEmpty().isNumeric().withMessage("Invalid location input!"),
   check("location.lng").notEmpty().isNumeric().withMessage("Invalid location input!"),
-  check("datetime").notEmpty().withMessage("Please specify time and date for the measurement!")
+  check("datetime").notEmpty().withMessage("Please specify time and date for the measurement!"),
+  check("noiseLevel").notEmpty().withMessage("Noise levels are mandatory data!")
 ], async(req,res) => {
 
   const { temperature, noiseLevel, ambientLight, pressure } = req.body;
